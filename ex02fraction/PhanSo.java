@@ -110,10 +110,11 @@ public class PhanSo {
             return false;
         }
     }
-    boolean number0() {
-        if (this.tuSo == 0) {
+    boolean number0(){
+        if(this.tuSo == 0){
             return true;
-        } else {
+        }
+        else {
             return false;
         }
     }
