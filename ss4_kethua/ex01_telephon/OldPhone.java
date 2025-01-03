@@ -10,7 +10,7 @@ public class OldPhone extends Phone {
         super();
     }
 
-    public OldPhone(int id, String namePhone, double price, int time, String company, int pin, String describe) {
+    public OldPhone(String id, String namePhone, double price, int time, String company, int pin, String describe) {
         super(id, namePhone, price, time, company);
         this.pin = pin;
         this.describe = describe;
@@ -24,6 +24,7 @@ public class OldPhone extends Phone {
         System.out.println("Nhap mo ta dien thoai cua ban: ");
         describe = input.nextLine();
     }
+
     public void output(){
         super.output();
         System.out.println("phan tram pin (%): " + pin);

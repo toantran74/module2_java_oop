@@ -3,7 +3,7 @@ package ss4_kethua.ex01_telephon;
 import java.util.Scanner;
 
 public class Phone {
-    private int id;
+    private String id;
     private String namePhone;
     private double price;
     private int time;
@@ -12,7 +12,7 @@ public class Phone {
     public Phone() {
     }
 
-    public Phone(int id, String namePhone, double price, int time, String company) {
+    public Phone(String id, String namePhone, double price, int time, String company) {
         this.id = id;
         this.namePhone = namePhone;
         this.price = price;
@@ -39,12 +39,11 @@ public class Phone {
         System.out.println("Company: " + company);
     }
 
-
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

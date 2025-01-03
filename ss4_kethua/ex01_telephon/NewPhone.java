@@ -9,7 +9,7 @@ public class NewPhone extends Phone {
         super();
     }
 
-    public NewPhone(int id, String namePhone, double price, int time, String company, int quantity) {
+    public NewPhone(String id, String namePhone, double price, int time, String company, int quantity) {
         super(id, namePhone, price, time, company);
         this.quantity = quantity;
     }
