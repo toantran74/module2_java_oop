@@ -5,18 +5,18 @@ import java.util.Scanner;
 
 public class Main {
     static Scanner input = new Scanner(System.in);
-
-    static ArrayList<OldPhone> oldPhones = new ArrayList<>();
-    static ArrayList<NewPhone> newPhones = new ArrayList<>();
+    static ArrayList<Phone> phones = new ArrayList<>();
+    //static ArrayList<OldPhone> oldPhones = new ArrayList<>();
+    //static ArrayList<NewPhone> newPhones = new ArrayList<>();
 
     static {
         // add phone old
-        oldPhones.add(new OldPhone("DTC001", "Iphon 14", 200000, 7, "Apple", 98, "Ngon"));
-        oldPhones.add(new OldPhone("DTC002", "Iphon 14", 200000, 7, "Apple", 98, "Ngon"));
+        phones.add(new OldPhone("DTC001", "Iphon 14", 200000, 7, "Apple", 98, "Ngon"));
+        phones.add(new OldPhone("DTC002", "Iphon 14", 200000, 7, "Apple", 98, "Ngon"));
 
         // add phone new
-        newPhones.add(new NewPhone("DTM001", "Iphon 17", 900000, 8, "Apple", 12));
-        newPhones.add(new NewPhone("DTM002", "Iphon 17", 900000, 8, "Apple", 12));
+        phones.add(new NewPhone("DTM001", "Iphon 17", 900000, 8, "Apple", 12));
+        phones.add(new NewPhone("DTM002", "Iphon 17", 900000, 8, "Apple", 12));
     }
 
     public static void main(String[] args) {
@@ -82,28 +82,34 @@ public class Main {
                 switch (choice) {
                     case 1:
                         System.out.println("Danh sach tat ca cac dien thoai");
-                        for (int i = 0; i < oldPhones.size(); i++) {
+                        for (int i = 0; i < phones.size(); i++) {
                             System.out.println("Thong tin dien thoai thu: " + (i + 1));
-                            oldPhones.get(i).output();
+                            phones.get(i).output();
                         }
 
-                        for (int i = 0; i < newPhones.size(); i++) {
+                        for (int i = 0; i < phones.size(); i++) {
                             System.out.println("Thong tin dien thoai thu: " + (i + 1));
-                            newPhones.get(i).output();
+                            phones.get(i).output();
                         }
                         break;
                     case 2:
                         System.out.println("Danh sach cac dien thoai cu");
-                        for (int i = 0; i < oldPhones.size(); i++) {
-                            System.out.println("Thong tin dien thoai thu: " + (i + 1));
-                            oldPhones.get(i).output();
+                        int count = 1;
+                        for (Phone phone : phones) {
+                            if (phone instanceof NewPhone) {
+                                System.out.println("Thong tin dien thoai thu: " + count++);
+                                phone.output();
+                            }
                         }
                         break;
                     case 3:
                         System.out.println("Danh sach cac dien thoai moi");
-                        for (int i = 0; i < newPhones.size(); i++) {
-                            System.out.println("Thong tin dien thoai thu: " + (i + 1));
-                            newPhones.get(i).output();
+                        count = 1;
+                        for (Phone phone : phones) {
+                            if (phone instanceof OldPhone) {
+                                System.out.println("Thong tin dien thoai thu: " + count++);
+                                phone.output();
+                            }
                         }
                         break;
                     case 4:
@@ -131,14 +137,14 @@ public class Main {
                         OldPhone oldPhone = new OldPhone();
                         oldPhone.output();
                         oldPhone.setId(getIdOldPhone());
-                        oldPhones.add(oldPhone);
+                        phones.add(oldPhone);
                         System.out.println("Them moi thanh cong");
                         break;
                     case 2:
                         NewPhone newPhone = new NewPhone();
                         newPhone.output();
                         newPhone.setId(getIdNewPhone());
-                        newPhones.add(newPhone);
+                        phones.add(newPhone);
                         System.out.println("Them moi thanh cong");
                         break;
                     case 3:
@@ -153,6 +159,7 @@ public class Main {
     }
 
     private static String getIdOldPhone() {
+        ArrayList<OldPhone> oldPhones = getOldPhones();
         if (oldPhones.size() == 0) {
             return "DTC001";
         }
@@ -166,13 +173,24 @@ public class Main {
         return String.format("DTC%03d", max + 1).replace(" ", "0");
     }
 
+    private static ArrayList<OldPhone> getOldPhones() {
+        ArrayList<OldPhone> oldPhones = new ArrayList<>();
+        for (Phone phone : phones) {
+            if (phone instanceof OldPhone) {
+                oldPhones.add((OldPhone) phone);
+            }
+        }
+        return oldPhones;
+    }
+
     private static String getIdNewPhone() {
-        if (newPhones.size() == 0) {
+        ArrayList<NewPhone> newPhones = getNewPhone();
+        if (phones.size() == 0) {
             return "DTM001";
         }
-        int max = Integer.parseInt(newPhones.get(0).getId().substring(3));
-        for (int i = 1; i < newPhones.size(); i++) {
-            int id = Integer.parseInt(newPhones.get(i).getId().substring(3));
+        int max = Integer.parseInt(phones.get(0).getId().substring(3));
+        for (int i = 1; i < phones.size(); i++) {
+            int id = Integer.parseInt(phones.get(i).getId().substring(3));
             if (id > max) {
                 max = id;
             }
@@ -180,29 +198,26 @@ public class Main {
         return String.format("DTM%03d", max + 1).replace(" ", "0");
     }
 
+    private static ArrayList<NewPhone> getNewPhone() {
+        ArrayList<NewPhone> newPhones = new ArrayList<>();
+        for (Phone phone : phones) {
+            if (phone instanceof NewPhone) {
+                newPhones.add((NewPhone) phone);
+            }
+        }
+        return newPhones;
+    }
+
     private static void menu3() {
         System.out.println("Nhap vao ma ban muon cap nhat!");
         String id = input.nextLine();
 
-        if (id.startsWith("DTC")) {
+        if (id.startsWith("DTC") || id.startsWith("DTM")) {
             boolean testPhone = false;
-            for (OldPhone oldPhone : oldPhones) {
-                if (oldPhone.getId().equals(id)) {
+            for (Phone phone : phones) {
+                if (phone.getId().equals(id)) {
                     testPhone = true;
-                    oldPhone.input();
-                    System.out.println("Cap nhap thanh cong");
-                    break;
-                }
-            }
-            if (!testPhone) {
-                System.out.println("Khong tim thay ma muon cap nhat!");
-            }
-        } else if (id.startsWith("DTM")) {
-            boolean testPhone = false;
-            for (NewPhone newPhone : newPhones) {
-                if (newPhone.getId().equals(id)) {
-                    testPhone = true;
-                    newPhone.input();
+                    phone.input();
                     System.out.println("Cap nhap thanh cong");
                     break;
                 }
@@ -218,36 +233,19 @@ public class Main {
     private static void menu4() {
         System.out.println("Nhap vao ma ban muon xoa");
         String id = input.nextLine();
-        if (id.startsWith("DTC")) {
+        if (id.startsWith("DTC") || id.startsWith("DTM")) {
             boolean testPhone = false;
-            for (OldPhone oldPhone : oldPhones) {
-                if (oldPhone.getId().equals(id)) {
+            for (Phone phone : phones) {
+                if (phone.getId().equals(id)) {
                     testPhone = true;
                     System.out.println("Ban co muon xoa dien thoai nay khong?(yes/no)");
                     String choice = input.nextLine();
                     if (choice.equalsIgnoreCase("yes")) {
-                        oldPhones.remove(oldPhone);
+                        phones.remove(phone);
                     } else {
                         System.out.println("Da huy viec xoa!");
                     }
-                }
-            }
-            if (!testPhone) {
-                System.out.println("Khong tim thay ma muon xoa!");
-            }
-        } else if (id.startsWith("DTM")) {
-            boolean testPhone = false;
-            for (NewPhone newPhone : newPhones) {
-                if (newPhone.getId().equals(id)) {
-                    testPhone = true;
-                    System.out.println("Ban co muon xoa dien thoai nay khong?(yes/no)");
-                    String choice = input.nextLine();
-                    if (choice.equalsIgnoreCase("yes")) {
-                        newPhones.remove(newPhone);
-                    } else {
-                        System.out.println("Da huy viec xoa!");
-                    }
-
+                    break;
                 }
             }
             if (!testPhone) {
@@ -272,8 +270,28 @@ public class Main {
                 switch (choice) {
                     case 1:
                         System.out.println("Tang dan");
+                        for (int i = 0; i < phones.size() - 1; i++) {
+                            for (int j = i + 1; j < phones.size(); j++) {
+                                if (phones.get(i).getPrice() > phones.get(j).getPrice()) {
+                                    Phone temp = phones.get(i);
+                                    phones.set(i, phones.get(j));
+                                    phones.set(j, temp);
+                                }
+                            }
+                        }
+                        break;
                     case 2:
                         System.out.println("Giam dan");
+                        for (int i = 0; i < phones.size() - 1; i++) {
+                            for (int j = i + 1; j < phones.size(); j++) {
+                                if (phones.get(i).getPrice() < phones.get(j).getPrice()) {
+                                    Phone temp = phones.get(i);
+                                    phones.set(i, phones.get(j));
+                                    phones.set(j, temp);
+                                }
+                            }
+                        }
+                        break;
                     case 3:
                         return;
                     default:
@@ -327,21 +345,53 @@ public class Main {
                 switch (choice) {
                     case 1:
                         System.out.println("THEO GIA");
+                        System.out.println("Nhap vao  khoang gia ban muon tim: ");
+                        System.out.println("Gia nho nhat: ");
+                        int minPrice = Integer.parseInt(input.nextLine());
+                        System.out.println("Gia lon nhat: ");
+                        int maxPrice = Integer.parseInt(input.nextLine());
+
+                        int count = 1;
+                        for (Phone phone : phones) {
+                            if (phone.getPrice() <= maxPrice && phone.getPrice() >= minPrice) {
+                                System.out.println("thong tin dien thoai thu: " + count++);
+                                phone.output();
+                            }
+                        }
                         break;
                     case 2:
                         System.out.println("THEO TEN");
+                        System.out.println("Nhap vao ten can tim: ");
+                        String name = input.nextLine();
+                        count = 1;
+                        for (Phone phone : phones) {
+                            if (phone.getNamePhone().equals(name)) {
+                                System.out.println("thong tin dien thoai thu: " + count++);
+                                phone.output();
+                            }
+                        }
                         break;
                     case 3:
                         System.out.println("THEO HANG");
+                        System.out.println("Nhap vao hang can tim: ");
+                        String company = input.nextLine();
+                        count = 1;
+                        for (Phone phone : phones) {
+                            if (phone.getCompany().equals(company)) {
+                                System.out.println("thong tin dien thoai thu: " + count++);
+                                phone.output();
+                            }
+                        }
                         break;
                     case 4:
                         return;
                     default:
                         System.out.println("Invalid Input");
                 }
-            }while (choice < 0 || choice > 4);
+            } while (choice < 0 || choice > 4);
         }
     }
+
     private static void searchOldPhone() {
         int choice;
         while (true) {
@@ -368,9 +418,57 @@ public class Main {
                     default:
                         System.out.println("Invalid Input");
                 }
-            }while (choice < 0 || choice > 4);
+            } while (choice < 0 || choice > 4);
+            ArrayList<OldPhone> oldPhones = getOldPhones();
+            switch (choice) {
+                case 1:
+                    System.out.println("THEO GIA");
+                    System.out.println("Nhap vao  khoang gia ban muon tim: ");
+                    System.out.println("Gia nho nhat: ");
+                    int minPrice = Integer.parseInt(input.nextLine());
+                    System.out.println("Gia lon nhat: ");
+                    int maxPrice = Integer.parseInt(input.nextLine());
+
+                    int count = 1;
+                    for (Phone phone : oldPhones) {
+                        if (phone.getPrice() <= maxPrice && phone.getPrice() >= minPrice) {
+                            System.out.println("thong tin dien thoai thu: " + count++);
+                            phone.output();
+                        }
+                    }
+                    break;
+                case 2:
+                    System.out.println("THEO TEN");
+                    System.out.println("Nhap vao ten can tim: ");
+                    String name = input.nextLine();
+                    count = 1;
+                    for (Phone phone : oldPhones) {
+                        if (phone.getNamePhone().contains(name)) {
+                            System.out.println("thong tin dien thoai thu: " + count++);
+                            phone.output();
+                        }
+                    }
+                    break;
+                case 3:
+                    System.out.println("THEO HANG");
+                    System.out.println("Nhap vao hang can tim: ");
+                    String company = input.nextLine();
+                    count = 1;
+                    for (Phone phone : oldPhones) {
+                        if (phone.getCompany().contains(company)) {
+                            System.out.println("thong tin dien thoai thu: " + count++);
+                            phone.output();
+                        }
+                    }
+                    break;
+                case 4:
+                    return;
+                default:
+                    System.out.println("Invalid Input");
+            }
         }
     }
+
     private static void searchNewPhone() {
         int choice;
         while (true) {
@@ -397,7 +495,54 @@ public class Main {
                     default:
                         System.out.println("Invalid Input");
                 }
-            }while (choice < 0 || choice > 4);
+                ArrayList<NewPhone> newPhones = getNewPhone();
+                switch (choice) {
+                    case 1:
+                        System.out.println("THEO GIA");
+                        System.out.println("Nhap vao  khoang gia ban muon tim: ");
+                        System.out.println("Gia nho nhat: ");
+                        int minPrice = Integer.parseInt(input.nextLine());
+                        System.out.println("Gia lon nhat: ");
+                        int maxPrice = Integer.parseInt(input.nextLine());
+
+                        int count = 1;
+                        for (Phone phone : newPhones) {
+                            if (phone.getPrice() <= maxPrice && phone.getPrice() >= minPrice) {
+                                System.out.println("thong tin dien thoai thu: " + count++);
+                                phone.output();
+                            }
+                        }
+                        break;
+                    case 2:
+                        System.out.println("THEO TEN");
+                        System.out.println("Nhap vao ten can tim: ");
+                        String name = input.nextLine();
+                        count = 1;
+                        for (Phone phone : newPhones) {
+                            if (phone.getNamePhone().contains(name)) {
+                                System.out.println("thong tin dien thoai thu: " + count++);
+                                phone.output();
+                            }
+                        }
+                        break;
+                    case 3:
+                        System.out.println("THEO HANG");
+                        System.out.println("Nhap vao hang can tim: ");
+                        String company = input.nextLine();
+                        count = 1;
+                        for (Phone phone : newPhones) {
+                            if (phone.getCompany().contains(company)) {
+                                System.out.println("thong tin dien thoai thu: " + count++);
+                                phone.output();
+                            }
+                        }
+                        break;
+                    case 4:
+                        return;
+                    default:
+                        System.out.println("Invalid Input");
+                }
+            } while (choice < 0 || choice > 4);
         }
     }
 }
