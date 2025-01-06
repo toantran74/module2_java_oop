@@ -2,7 +2,7 @@ package ss4_kethua.ex01_telephon;
 
 import java.util.Scanner;
 
-public class OldPhone extends Phone {
+public class OldPhone extends Phone implements Discountable {
     private int pin;
     private String describe;
 
@@ -16,7 +16,7 @@ public class OldPhone extends Phone {
         this.describe = describe;
     }
 
-    public void input(){
+    public void input() {
         super.input();
         Scanner input = new Scanner(System.in);
         System.out.println("Nhap phan tram pin (%): ");
@@ -25,10 +25,21 @@ public class OldPhone extends Phone {
         describe = input.nextLine();
     }
 
-    public void output(){
+    public void output() {
         super.output();
         System.out.println("phan tram pin (%): " + pin);
         System.out.println("phan mo ta dien thoai cua ban: " + describe);
+    }
+
+    @Override
+    public double calculatePrice() {
+        return getPrice();
+    }
+
+    @Override
+    public void applyDiscount(double percentDiscount) {
+        double discountedPrice = getPrice() * (1 - percentDiscount / 100.0);
+        setPrice(discountedPrice);
     }
 
     public int getPin() {

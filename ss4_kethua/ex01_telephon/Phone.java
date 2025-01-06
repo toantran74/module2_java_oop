@@ -2,7 +2,7 @@ package ss4_kethua.ex01_telephon;
 
 import java.util.Scanner;
 
-public class Phone {
+public abstract class Phone {
     private String id;
     private String namePhone;
     private double price;
@@ -38,6 +38,7 @@ public class Phone {
         System.out.println("Time: " + time);
         System.out.println("Company: " + company);
     }
+    public abstract double calculatePrice();
 
     public String getId() {
         return id;

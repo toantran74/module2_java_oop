@@ -56,15 +56,36 @@ public class Main {
                         menu6();
                         break;
                     case 7:
-                        //menu7();
+                        System.out.println("Tong gia cua tat ca dien thoai: " + calculateTotalPriceInStore());
                         break;
                     case 8:
-                        //menu8();
+                        System.out.println("Nhap vap % muon giam gia!");
+                        double price = Double.parseDouble(input.nextLine());
+                        applyDiscountOldPhone(price);
+                        System.out.println("Giam gia thanh cong");
                         break;
                     case 9:
                         return;
+                    default:
+                        System.out.println("Invalid choice");
                 }
             } while (choice < 1 || choice > 5);
+        }
+    }
+
+    private static double calculateTotalPriceInStore() {
+        double totalPrice = 0;
+        for (Phone phone : phones) {
+            totalPrice += phone.getPrice();
+        }
+        return totalPrice;
+    }
+
+    private static void applyDiscountOldPhone(double price) {
+        for (Phone phone : phones) {
+            if (phone instanceof OldPhone) {
+                ((OldPhone) phone).applyDiscount(price);
+            }
         }
     }
 

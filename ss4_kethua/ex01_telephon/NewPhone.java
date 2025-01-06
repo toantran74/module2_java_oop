@@ -25,6 +25,11 @@ public class NewPhone extends Phone {
         System.out.println("Quantity: " + quantity);
     }
 
+    @Override
+    public double calculatePrice() {
+        return getPrice() * quantity;
+    }
+
     public int getQuantity() {
         return quantity;
     }
