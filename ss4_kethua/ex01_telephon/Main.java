@@ -56,10 +56,10 @@ public class Main {
                         menu6();
                         break;
                     case 7:
-                        menu7();
+                        //menu7();
                         break;
                     case 8:
-                        menu8();
+                        //menu8();
                         break;
                     case 9:
                         return;
@@ -137,7 +137,7 @@ public class Main {
                     case 2:
                         NewPhone newPhone = new NewPhone();
                         newPhone.output();
-                        newPhone.setId(newPhone.getId());
+                        newPhone.setId(getIdNewPhone());
                         newPhones.add(newPhone);
                         System.out.println("Them moi thanh cong");
                         break;
@@ -147,18 +147,19 @@ public class Main {
                         System.out.println("Lua chon khong hop le!");
                 }
 
-            }while (choice < 1 || choice > 3);
+            } while (choice < 1 || choice > 3);
 
         }
     }
+
     private static String getIdOldPhone() {
-        if(oldPhones.size() == 0){
+        if (oldPhones.size() == 0) {
             return "DTC001";
         }
         int max = Integer.parseInt(oldPhones.get(0).getId().substring(3));
         for (int i = 1; i < oldPhones.size(); i++) {
             int id = Integer.parseInt(oldPhones.get(i).getId().substring(3));
-            if (id > max){
+            if (id > max) {
                 max = id;
             }
         }
@@ -166,17 +167,237 @@ public class Main {
     }
 
     private static String getIdNewPhone() {
-        if(oldPhones.size() == 0){
+        if (newPhones.size() == 0) {
             return "DTM001";
         }
-        int max = Integer.parseInt(oldPhones.get(0).getId().substring(3));
+        int max = Integer.parseInt(newPhones.get(0).getId().substring(3));
         for (int i = 1; i < newPhones.size(); i++) {
-            int id = Integer.parseInt(oldPhones.get(i).getId().substring(3));
-            if (id > max){
+            int id = Integer.parseInt(newPhones.get(i).getId().substring(3));
+            if (id > max) {
                 max = id;
             }
         }
         return String.format("DTM%03d", max + 1).replace(" ", "0");
     }
 
+    private static void menu3() {
+        System.out.println("Nhap vao ma ban muon cap nhat!");
+        String id = input.nextLine();
+
+        if (id.startsWith("DTC")) {
+            boolean testPhone = false;
+            for (OldPhone oldPhone : oldPhones) {
+                if (oldPhone.getId().equals(id)) {
+                    testPhone = true;
+                    oldPhone.input();
+                    System.out.println("Cap nhap thanh cong");
+                    break;
+                }
+            }
+            if (!testPhone) {
+                System.out.println("Khong tim thay ma muon cap nhat!");
+            }
+        } else if (id.startsWith("DTM")) {
+            boolean testPhone = false;
+            for (NewPhone newPhone : newPhones) {
+                if (newPhone.getId().equals(id)) {
+                    testPhone = true;
+                    newPhone.input();
+                    System.out.println("Cap nhap thanh cong");
+                    break;
+                }
+            }
+            if (!testPhone) {
+                System.out.println("Khong tim thay ma muon cap nhat!");
+            }
+        } else {
+            System.out.println("Invalid Input");
+        }
+    }
+
+    private static void menu4() {
+        System.out.println("Nhap vao ma ban muon xoa");
+        String id = input.nextLine();
+        if (id.startsWith("DTC")) {
+            boolean testPhone = false;
+            for (OldPhone oldPhone : oldPhones) {
+                if (oldPhone.getId().equals(id)) {
+                    testPhone = true;
+                    System.out.println("Ban co muon xoa dien thoai nay khong?(yes/no)");
+                    String choice = input.nextLine();
+                    if (choice.equalsIgnoreCase("yes")) {
+                        oldPhones.remove(oldPhone);
+                    } else {
+                        System.out.println("Da huy viec xoa!");
+                    }
+                }
+            }
+            if (!testPhone) {
+                System.out.println("Khong tim thay ma muon xoa!");
+            }
+        } else if (id.startsWith("DTM")) {
+            boolean testPhone = false;
+            for (NewPhone newPhone : newPhones) {
+                if (newPhone.getId().equals(id)) {
+                    testPhone = true;
+                    System.out.println("Ban co muon xoa dien thoai nay khong?(yes/no)");
+                    String choice = input.nextLine();
+                    if (choice.equalsIgnoreCase("yes")) {
+                        newPhones.remove(newPhone);
+                    } else {
+                        System.out.println("Da huy viec xoa!");
+                    }
+
+                }
+            }
+            if (!testPhone) {
+                System.out.println("Khong tim thay ma muon xoa!");
+            }
+        } else {
+            System.out.println("Invalid Input");
+        }
+    }
+
+    private static void menu5() {
+        int choice;
+        while (true) {
+            do {
+                System.out.println("Sap xep dien thoai theo gia");
+                System.out.println("1. Tang dan");
+                System.out.println("2. Giam dan");
+                System.out.println("3. Thoat");
+
+                System.out.println("Moi ban lua chon");
+                choice = Integer.parseInt(input.nextLine());
+                switch (choice) {
+                    case 1:
+                        System.out.println("Tang dan");
+                    case 2:
+                        System.out.println("Giam dan");
+                    case 3:
+                        return;
+                    default:
+                        System.out.println("Invalid Input");
+                }
+            } while (choice < 0 || choice > 3);
+        }
+    }
+
+    private static void menu6() {
+        int choice;
+        while (true) {
+            do {
+                System.out.println("TIM KIEM DIEN THOAI");
+                System.out.println("1. Tim kiem tat ca cac dien thoai");
+                System.out.println("2. Tim kiem dien thoai cu");
+                System.out.println("3. Tim kiem dien thoai moi");
+                System.out.println("Thoat");
+                System.out.println("Moi ban lua chon");
+                choice = Integer.parseInt(input.nextLine());
+                switch (choice) {
+                    case 1:
+                        searchAllPhone();
+                        break;
+                    case 2:
+                        searchOldPhone();
+                        break;
+                    case 3:
+                        searchNewPhone();
+                        break;
+                    case 4:
+                        return;
+                    default:
+                        System.out.println("Invalid Input");
+                }
+            } while (choice < 0 || choice > 4);
+        }
+    }
+
+    private static void searchAllPhone() {
+        int choice;
+        while (true) {
+            do {
+                System.out.println("Tim kiem theo tat ca cac dien thoai");
+                System.out.println("1. Tim kiem theo gia");
+                System.out.println("2. Tim kiem theo ten");
+                System.out.println("3. Tim kiem theo hang");
+                System.out.println("4. Thoat");
+                System.out.println("Moi ban lua chon");
+                choice = Integer.parseInt(input.nextLine());
+                switch (choice) {
+                    case 1:
+                        System.out.println("THEO GIA");
+                        break;
+                    case 2:
+                        System.out.println("THEO TEN");
+                        break;
+                    case 3:
+                        System.out.println("THEO HANG");
+                        break;
+                    case 4:
+                        return;
+                    default:
+                        System.out.println("Invalid Input");
+                }
+            }while (choice < 0 || choice > 4);
+        }
+    }
+    private static void searchOldPhone() {
+        int choice;
+        while (true) {
+            do {
+                System.out.println("Tim kiem theo tat ca cac dien thoai");
+                System.out.println("1. Tim kiem theo gia");
+                System.out.println("2. Tim kiem theo ten");
+                System.out.println("3. Tim kiem theo hang");
+                System.out.println("4. Thoat");
+                System.out.println("Moi ban lua chon");
+                choice = Integer.parseInt(input.nextLine());
+                switch (choice) {
+                    case 1:
+                        System.out.println("THEO GIA");
+                        break;
+                    case 2:
+                        System.out.println("THEO TEN");
+                        break;
+                    case 3:
+                        System.out.println("THEO HANG");
+                        break;
+                    case 4:
+                        return;
+                    default:
+                        System.out.println("Invalid Input");
+                }
+            }while (choice < 0 || choice > 4);
+        }
+    }
+    private static void searchNewPhone() {
+        int choice;
+        while (true) {
+            do {
+                System.out.println("Tim kiem theo tat ca cac dien thoai");
+                System.out.println("1. Tim kiem theo gia");
+                System.out.println("2. Tim kiem theo ten");
+                System.out.println("3. Tim kiem theo hang");
+                System.out.println("4. Thoat");
+                System.out.println("Moi ban lua chon");
+                choice = Integer.parseInt(input.nextLine());
+                switch (choice) {
+                    case 1:
+                        System.out.println("THEO GIA");
+                        break;
+                    case 2:
+                        System.out.println("THEO TEN");
+                        break;
+                    case 3:
+                        System.out.println("THEO HANG");
+                        break;
+                    case 4:
+                        return;
+                    default:
+                        System.out.println("Invalid Input");
+                }
+            }while (choice < 0 || choice > 4);
+        }
+    }
 }

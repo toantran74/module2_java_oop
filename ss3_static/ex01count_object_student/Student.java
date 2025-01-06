@@ -6,6 +6,7 @@ public class Student {
     private double score;
     private static int count = 0;
 
+
     public Student(int mssv, String name, double score) {
         this.mssv = mssv;
         this.name = name;
