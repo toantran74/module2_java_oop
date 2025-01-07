@@ -1,6 +1,7 @@
 package ss4_kethua.ex01_telephon;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class Main {
@@ -17,6 +18,34 @@ public class Main {
         // add phone new
         phones.add(new NewPhone("DTM001", "Iphon 17", 900000, 8, "Apple", 12));
         phones.add(new NewPhone("DTM002", "Iphon 17", 900000, 8, "Apple", 12));
+    }
+
+    private static void menuSort() {
+        int choice;
+        while (true) {
+            do {
+                System.out.println("\n 1. Sort phones");
+                System.out.println("\n 2. Display all phones");
+                System.out.println("\n 3. Exit");
+                System.out.println("\n Enter your choice: ");
+                choice = input.nextInt();
+                switch (choice) {
+                    case 1:
+                        Collections.sort(phones);
+
+                        break;
+                    case 2:
+                        phones.sort(Collections.reverseOrder());
+                        break;
+                    case 3:
+                        return;
+                    default:
+                        System.out.println("Invalid choice");
+
+                        break;
+                }
+            }while(choice < 0 || choice > 3);
+        }
     }
 
     public static void main(String[] args) {

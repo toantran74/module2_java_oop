@@ -2,7 +2,7 @@ package ss4_kethua.ex01_telephon;
 
 import java.util.Scanner;
 
-public abstract class Phone {
+public abstract class Phone implements Comparable<Phone> {
     private String id;
     private String namePhone;
     private double price;
@@ -38,6 +38,12 @@ public abstract class Phone {
         System.out.println("Time: " + time);
         System.out.println("Company: " + company);
     }
+
+    @Override
+    public int compareTo(Phone o) {
+        return Double.compare(this.getPrice(), o.price);
+    }
+
     public abstract double calculatePrice();
 
     public String getId() {
