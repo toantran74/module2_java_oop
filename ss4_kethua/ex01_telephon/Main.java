@@ -51,54 +51,59 @@ public class Main {
     public static void main(String[] args) {
         int choice;
         while (true) {
-            do {
-                System.out.println("CHUONG TRINH QUAN LY DIEN THOAI!");
-                System.out.println("1. Xem danh sach dien thoai");
-                System.out.println("2. Them moi");
-                System.out.println("3. Cap nhat");
-                System.out.println("4. Xoa");
-                System.out.println("5. Sap xep theo gia");
-                System.out.println("6. Tim kiem");
-                System.out.println("7. Tinh tong tien");
-                System.out.println("8. Giam gia cho dien thoai cu");
-                System.out.println("9. Thoat");
+            try {
+                do {
+                    System.out.println("CHUONG TRINH QUAN LY DIEN THOAI!");
+                    System.out.println("1. Xem danh sach dien thoai");
+                    System.out.println("2. Them moi");
+                    System.out.println("3. Cap nhat");
+                    System.out.println("4. Xoa");
+                    System.out.println("5. Sap xep theo gia");
+                    System.out.println("6. Tim kiem");
+                    System.out.println("7. Tinh tong tien");
+                    System.out.println("8. Giam gia cho dien thoai cu");
+                    System.out.println("9. Thoat");
 
-                System.out.println("Moi ban lua chọn");
-                choice = Integer.parseInt(input.nextLine());
-                switch (choice) {
-                    case 1:
-                        menu1();
-                        break;
-                    case 2:
-                        menu2();
-                        break;
-                    case 3:
-                        menu3();
-                        break;
-                    case 4:
-                        menu4();
-                        break;
-                    case 5:
-                        menu5();
-                        break;
-                    case 6:
-                        menu6();
-                        break;
-                    case 7:
-                        System.out.println("Tong gia cua tat ca dien thoai: " + calculateTotalPriceInStore());
-                        break;
-                    case 8:
-                        System.out.println("Nhap vap % muon giam gia!");
-                        double price = Double.parseDouble(input.nextLine());
-                        applyDiscountOldPhone(price);
-                        System.out.println("Giam gia thanh cong");
-                        break;
-                    case 9:
-                        return;
-                    default:
-                        System.out.println("Invalid choice");
-                }
-            } while (choice < 1 || choice > 5);
+                    System.out.println("Moi ban lua chọn");
+                    choice = Integer.parseInt(input.nextLine());
+                    switch (choice) {
+                        case 1:
+                            menu1();
+                            break;
+                        case 2:
+                            menu2();
+                            break;
+                        case 3:
+                            menu3();
+                            break;
+                        case 4:
+                            menu4();
+                            break;
+                        case 5:
+                            menu5();
+                            break;
+                        case 6:
+                            menu6();
+                            break;
+                        case 7:
+                            System.out.println("Tong gia cua tat ca dien thoai: " + calculateTotalPriceInStore());
+                            break;
+                        case 8:
+                            System.out.println("Nhap vap % muon giam gia!");
+                            double price = Double.parseDouble(input.nextLine());
+                            applyDiscountOldPhone(price);
+                            System.out.println("Giam gia thanh cong");
+                            break;
+                        case 9:
+                            return;
+                        default:
+                            System.out.println("Invalid choice");
+                    }
+                } while (choice < 1 || choice > 5);
+            }catch (Exception e) {
+                e.printStackTrace();
+                System.out.printf("Ung dung gap 1 so loi khong mong muon, vui long thu lai");
+            }
         }
     }
 

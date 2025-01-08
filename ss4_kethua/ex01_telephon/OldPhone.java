@@ -1,5 +1,7 @@
 package ss4_kethua.ex01_telephon;
 
+import ss10_exception.validation.PhoneValidate;
+
 import java.util.Scanner;
 
 public class OldPhone extends Phone implements Discountable {
@@ -18,11 +20,13 @@ public class OldPhone extends Phone implements Discountable {
 
     public void input() {
         super.input();
-        Scanner input = new Scanner(System.in);
-        System.out.println("Nhap phan tram pin (%): ");
-        pin = Integer.parseInt(input.nextLine());
-        System.out.println("Nhap mo ta dien thoai cua ban: ");
-        describe = input.nextLine();
+//        Scanner input = new Scanner(System.in);
+//        System.out.println("Nhap phan tram pin (%): ");
+//        pin = Integer.parseInt(input.nextLine());
+//        System.out.println("Nhap mo ta dien thoai cua ban: ");
+//        describe = input.nextLine();
+        this.pin = PhoneValidate.inputBatteryPercentage("Nhap pin");
+        this.describe = PhoneValidate.inputDescription("Nhap mo ta");
     }
 
     public void output() {

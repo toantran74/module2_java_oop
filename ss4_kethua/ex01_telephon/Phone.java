@@ -1,5 +1,7 @@
 package ss4_kethua.ex01_telephon;
 
+import ss10_exception.validation.PhoneValidate;
+
 import java.util.Scanner;
 
 public abstract class Phone implements Comparable<Phone> {
@@ -21,15 +23,19 @@ public abstract class Phone implements Comparable<Phone> {
     }
 
     public void input(){
-        Scanner input = new Scanner(System.in);
-        System.out.print("Nhap ten cua dien thoai: ");
-        namePhone = input.nextLine();
-        System.out.print("Nhap gia ban cua dien thoai: ");
-        price = Double.parseDouble(input.nextLine());
-        System.out.print("Nhap thoi gian bao hanh cua dien thoai: ");
-        time = Integer.parseInt(input.nextLine());
-        System.out.print("Nhap hang cua dien thoai: ");
-        company = input.nextLine();
+//        Scanner input = new Scanner(System.in);
+//        System.out.print("Nhap ten cua dien thoai: ");
+//        namePhone = input.nextLine();
+//        System.out.print("Nhap gia ban cua dien thoai: ");
+//        price = Double.parseDouble(input.nextLine());
+//        System.out.print("Nhap thoi gian bao hanh cua dien thoai: ");
+//        time = Integer.parseInt(input.nextLine());
+//        System.out.print("Nhap hang cua dien thoai: ");
+//        company = input.nextLine();
+        this.namePhone = PhoneValidate.inputName("Ten dien thoai");
+        this.price = PhoneValidate.inputPrice("Gia ban");
+        this.time = PhoneValidate.inputWarranty("Gia ban");
+        this.company = PhoneValidate.inputCompany("Hang san xuat");
     }
     public void output(){
         System.out.println("Id: " + id);

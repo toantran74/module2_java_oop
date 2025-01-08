@@ -1,5 +1,7 @@
 package ss4_kethua.ex01_telephon;
 
+import ss10_exception.validation.PhoneValidate;
+
 import java.util.Scanner;
 
 public class NewPhone extends Phone {
@@ -16,9 +18,10 @@ public class NewPhone extends Phone {
 
     public void input(){
         super.input();
-        Scanner input = new Scanner(System.in);
-        System.out.print("Enter quantity: ");
-        quantity = Integer.parseInt(input.nextLine());
+//        Scanner input = new Scanner(System.in);
+//        System.out.print("Enter quantity: ");
+//        quantity = Integer.parseInt(input.nextLine());
+        this.quantity = PhoneValidate.inputQuantity("Nhap so luong");
     }
     public void output(){
         super.output();
